@@ -1,0 +1,38 @@
+
+			LibGameTraq Format Specification
+                                  Version 1.0
+                          Michiel 'El Muerte' Hendriks
+                           elmuerte@drunksnipers.com
+
+--{ TraqID }--------------------------------------------------------------------
+
+The TraqID starts with the signature "TID_" followed by 16 upper case 
+alphanumeric characters.
+
+Perl Compatible Regular Expression:
+	/^TID_([A-Z0-9]{16})$/
+
+
+--{ Data serialization }--------------------------------------------------------
+
+
+OBJECT      = IDENTIFIER '{' RECORDS '}' DELIM_REC
+RECORDS     = ( RECORD DELIM_REC )*
+RECORD      = REC_STRING | REC_INTEGER | REC_FLOAT | REC_BOOL | ...
+
+REC_STRING  = 's' DELIM_FIELD IDENTIFIER DELIM_FIELD '"' CDATA '"'
+REC_INTEGER = 'i' DELIM_FIELD IDENTIFIER DELIM_FIELD INTEGER
+REC_FLOAT   = 'f' DELIM_FIELD IDENTIFIER DELIM_FIELD FLOAT
+REC_BOOL    = 'b' DELIM_FIELD IDENTIFIER DELIM_FIELD (TRUE | FALSE)
+REC_OBJECT  = 'o' DELIM_FIELD IDENTIFIER DELIM_FIELD IDENTIFIER '{' RECORDS '}'
+REC_ARRAY   = 'a' DELIM_FIELD IDENTIFIER DELIM_FIELD INTEGER '{' RECORDS '}'
+
+
+DELIM_FIELD = ':'
+DELIM_REC   = ';'
+TRUE        = '1'
+FALSE       = '0'
+
+
+--------------------------------------------------------------------------------
+$Id: FORMATS.TXT,v 1.1 2004/12/20 14:19:18 elmuerte Exp $
